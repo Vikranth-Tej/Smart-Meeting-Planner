@@ -25,16 +25,6 @@ uvicorn main:app --reload
 http://127.0.0.1:8000/
 ```
 
-Folder structure should look like this:
-
-```
-smart-meeting-planner/
-├── main.py
-├── requirements.txt
-├── README.md
-└── static/
-    └── index.html
-```
 ---
 
 ## Sample Input
