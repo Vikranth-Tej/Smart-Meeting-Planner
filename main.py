@@ -99,6 +99,7 @@ def suggest_slots(duration: int = 30):
 
     return suggestions
 
+
 # Endpoint: Book a selected slot
 @app.post("/book")
 def book_slot(request: BookRequest):
@@ -126,6 +127,7 @@ def get_user_calendar(user_id: int):
         "user_id": user_id,
         "busy": busy + booked
     }
+
 
 # Serve static HTML
 app.mount("/static", StaticFiles(directory="static"), name="static")
