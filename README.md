@@ -25,7 +25,7 @@ uvicorn main:app --reload
 http://127.0.0.1:8000/
 ```
 
-Your folder structure should look like this:
+Folder structure should look like this:
 
 ```
 smart-meeting-planner/
@@ -60,6 +60,7 @@ Route -	Method - Description:
 
 ---
 # Reflection
+
 ### 1. How exactly did you use AI while building this?
 #### Tools Used:
 - ChatGPT (GPT-4o) for full-stack scaffolding, API logic, HTML UX, debugging, and prompt driven iteration.
@@ -74,6 +75,7 @@ Route -	Method - Description:
 #### Failures:
 - Sometimes generated unnecessary extras (like keeping the Submit button after removing logic).
 - Needed to guide AI to stick strictly to spec wording.
+
 
 ### 2.If given two more days, what would you refactor or add first, and why?
 Planned Next:
