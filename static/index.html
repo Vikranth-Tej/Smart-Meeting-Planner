@@ -76,22 +76,32 @@
       background-color: #d0f0d0;
     }
 
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 10px;
-      border-radius: 5px;
+    .message-box {
+      display: inline-block;
+      margin-left: 12px;
+      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      max-width: 300px;
+      vertical-align: middle;
+      white-space: pre-line; 
+      word-break: break-word;
+      background-color: #eee;
+      color: #333;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .success {
+    .message-box.success {
       background-color: #d4edda;
       color: #155724;
     }
 
-    .error {
+    .message-box.error {
       background-color: #f8d7da;
       color: #721c24;
     }
+
   </style>
 </head>
 <body>
@@ -103,6 +113,7 @@
     <div class="button-group">
       <button id="suggestBtn" onclick="suggestSlots()">Suggest</button>
       <button id="bookBtn" onclick="bookSelected()" disabled>Book Selected Slot</button>
+      <div id="bookMessage" class="message-box"></div>
     </div>
 
     <table id="resultsTable">
@@ -112,21 +123,35 @@
       <tbody id="resultsBody"></tbody>
     </table>
 
-    <div id="message" class="message"></div>
+    <div id="loadMessage" class="message-box" style="margin: 20px auto; text-align: center;"></div>
   </div>
 
   <script>
     const jsonInput = document.getElementById('jsonInput');
     const bookBtn = document.getElementById('bookBtn');
-    const msgDiv = document.getElementById('message');
+    const bookMessageDiv = document.getElementById('bookMessage');
+    const loadMessageDiv = document.getElementById('loadMessage');
     const resultsBody = document.getElementById('resultsBody');
     let selectedSlot = null;
 
-    function showMessage(text, type = 'success') {
-      msgDiv.textContent = text;
-      msgDiv.className = `message ${type}`;
-      msgDiv.style.display = 'block';
-      setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
+    function showBookMessage(text, type = 'success') {
+      bookMessageDiv.textContent = text;
+      bookMessageDiv.className = `message-box ${type}`;
+      bookMessageDiv.style.opacity = '1';
+
+      setTimeout(() => {
+        bookMessageDiv.style.opacity = '0';
+      }, 6000);
+    }
+
+    function showLoadMessage(text, type = 'success') {
+      loadMessageDiv.textContent = text;
+      loadMessageDiv.className = `message-box ${type}`;
+      loadMessageDiv.style.opacity = '1';
+
+      setTimeout(() => {
+        loadMessageDiv.style.opacity = '0';
+      }, 6000);
     }
 
     async function suggestSlots() {
@@ -146,7 +171,7 @@
         bookBtn.disabled = true;
 
         if (!data.length) {
-          showMessage("No available slots found.", 'error');
+          showLoadMessage("No available slots found. Please adjust your input.", 'error');
           return;
         }
 
@@ -171,9 +196,9 @@
           btnCell.appendChild(selectBtn);
         });
 
-        showMessage("Free slots loaded.");
+        showLoadMessage(`Free slots loaded! Available: ${data.length} option(s)`, 'success');
       } catch {
-        showMessage("Invalid JSON or fetch failed.", 'error');
+        showLoadMessage("Invalid JSON. Please check your input.", 'error');
       }
     }
 
@@ -192,15 +217,16 @@
 
         const data = await res.json();
         if (res.ok) {
-          showMessage("Slot booked!");
-          suggestSlots(); // Refresh available slots
+          showBookMessage(`Slot booked! Users: [${userIds.join(', ')}]`, 'success');
+          suggestSlots();
         } else {
-          showMessage(data.detail || "Booking failed.", 'error');
+          showBookMessage(`Booking failed! ${data.detail || "Try another slot."}`, 'error');
         }
       } catch {
-        showMessage("Error booking the slot.", 'error');
+        showBookMessage("Error booking slot.Please try again.", 'error');
       }
     }
   </script>
+
 </body>
 </html>
