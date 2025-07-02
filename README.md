@@ -49,29 +49,5 @@ Route -	Method - Description:
 - /calendar/{id} - GET -	View both busy + booked slots for a single user
 
 ---
-# Reflection
 
-### 1. How exactly did you use AI while building this?
-#### Tools Used:
-- ChatGPT (GPT-4o) for full-stack scaffolding, API logic, HTML UX, debugging, and prompt driven iteration.
-#### Prompts included:
-- "Build me a FastAPI endpoint for slot suggestion"
-- "edit the given code with much more logical efficiency"
-- "Refactor this HTML to remove Submit and make Book smarter"
-- "Make the UI  usable"
-#### successes:
-- Cut dev time by 70% while polishing frontend logic.
-- Got clean backend API logic in one go.
-#### Failures:
-- Sometimes generated unnecessary extras (like keeping the Submit button after removing logic).
-- Needed to guide AI to stick strictly to spec wording.
-
-
-### 2.If given two more days, what would you refactor or add first, and why?
-Planned Next:
-- Calendar visualization for each user (GET /calendar/{id} → frontend).
-- Duration input dropdown for customizable meeting lengths.
-- A backend data store (e.g., SQLite) to persist slots beyond app restart.
-
-These improve usability, realism and data persistence, making it more production grade.
 
